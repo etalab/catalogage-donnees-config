@@ -1,0 +1,3 @@
+# App
+frictionless==4.40.3
+frictionless[json]
