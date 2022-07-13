@@ -10,3 +10,6 @@ install: #- Install dependencies
 	python3 -m venv ${venv}
 	${pip} install -U pip wheel setuptools
 	${pip} install -r requirements.txt
+
+test: #- Run the test suite
+	${bin}pytest
