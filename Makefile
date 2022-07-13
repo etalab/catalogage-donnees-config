@@ -16,8 +16,7 @@ test: #- Run the test suite
 	${bin}pytest
 
 format: #- Format code
-	${bin}black ${pysources}
-	${bin}isort ${pysources}
+	${bin}black ${pysources} --verbose
 
 check: #- Check the code
 	${bin}black --check ${pysources}
