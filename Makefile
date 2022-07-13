@@ -5,6 +5,7 @@ venv = venv
 bin = ${venv}/bin/
 python = ${bin}python
 pip = ${bin}pip
+pysources = lib/ tests/
 
 install: #- Install dependencies
 	python3 -m venv ${venv}
@@ -13,3 +14,17 @@ install: #- Install dependencies
 
 test: #- Run the test suite
 	${bin}pytest
+
+format: #- Format code
+	${bin}black ${pysources}
+	${bin}isort ${pysources}
+
+check: #- Check the code
+	${bin}black --check ${pysources}
+	${bin}flake8 ${pysources}
+	${bin}mypy ${pysources}
+	${bin}isort --check --diff ${pysources}
+
+check-format: #- Format and check the code
+	make format
+	make check
