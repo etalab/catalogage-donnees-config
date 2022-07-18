@@ -1,5 +1,5 @@
 import json
-import pathlib
+from pathlib import Path
 from typing import List
 
 from frictionless import Resource, validate
@@ -8,9 +8,9 @@ from frictionless.report import Report
 from .entities import Organization
 
 
-def get_organizations_path(path: str) -> List[str]:
-    org_paths: List[str] = []
-    for orgdir in pathlib.Path(path).iterdir():
+def get_organizations_path(path: str) -> List[Path]:
+    org_paths: List[Path] = []
+    for orgdir in Path(path).iterdir():
         org_path = orgdir / "organization.json"
         org_paths.append(org_path)
 
@@ -31,12 +31,12 @@ def get_organizations(path: str) -> List[Organization]:
     return organizations
 
 
-def contains_one_organization_per_file(path: pathlib.Path) -> bool:
+def contains_one_organization_per_file(path: Path) -> bool:
     data = json.loads(path.read_text())
     return len(data) == 1
 
 
-def get_organization_validation_report(path: pathlib.Path) -> Report:
+def get_organization_validation_report(path: Path) -> Report:
 
     template = {
         "path": "...",
