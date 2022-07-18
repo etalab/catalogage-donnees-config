@@ -1,7 +1,5 @@
 import pathlib
 
-import pytest
-
 from lib.organization import (
     contains_one_organization_per_file,
     get_organizations,
@@ -14,7 +12,7 @@ def test_get_org_paths() -> None:
     assert len(org_paths) == 3
     org_1 = org_paths[0]
     assert str(org_1) == "tests/fixtures/test_orga_bad/organization.json"
-    org_2 = org_paths[0]
+    org_2 = org_paths[1]
     assert str(org_2) == "tests/fixtures/test_orga_1/organization.json"
 
 

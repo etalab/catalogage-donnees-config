@@ -29,4 +29,4 @@ check-format: #- Format and check the code
 	make check
 	
 check-organizations: #- Validate organizations schema
-	${bin}/python scripts/check-organisation.py
+	${bin}python -m scripts.check_organizations organizations
