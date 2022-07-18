@@ -14,8 +14,7 @@ from pathlib import Path
 
 def main(directory: Path) -> int:
     code = 0
-    for org_path in get_organizations_path("organizations"):
-
+    for org_path in get_organizations_path(directory):
         if not contains_one_organization_per_file(org_path):
             print(
                 f"an organization file must contain only one organization. Multiple organizations found in {org_path}"

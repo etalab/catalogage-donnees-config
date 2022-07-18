@@ -8,7 +8,7 @@ from frictionless.report import Report
 from .entities import Organization
 
 
-def get_organizations_path(path: str) -> List[Path]:
+def get_organizations_path(path: Path) -> List[Path]:
     org_paths: List[Path] = []
     for orgdir in Path(path).iterdir():
         org_path = orgdir / "organization.json"
@@ -17,7 +17,7 @@ def get_organizations_path(path: str) -> List[Path]:
     return org_paths
 
 
-def get_organizations(path: str) -> List[Organization]:
+def get_organizations(path: Path) -> List[Organization]:
     organizations: List[Organization] = []
 
     for org_path in get_organizations_path(path):
@@ -49,13 +49,13 @@ def get_organization_validation_report(path: Path) -> Report:
         "schema": {
             "fields": [
                 {
-                    "name": "siret",
-                    "title": "Numéro SIRET de l'organisation",
+                    "name": "name",
+                    "title": "Nom de l'organisation",
                     "type": "string",
                 },
                 {
-                    "name": "name",
-                    "title": "Nom de l'organisation",
+                    "name": "siret",
+                    "title": "Numéro SIRET de l'organisation",
                     "type": "string",
                 },
             ]
