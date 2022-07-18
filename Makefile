@@ -31,3 +31,7 @@ check-format: #- Format and check the code
 	
 check-organizations: #- Validate organizations schema
 	${bin}python -m scripts.check_organizations organizations
+
+
+upload-organizations: #- Upload organizations
+	ENV="production" ${bin}python -m scripts.upload_organizations organizations
