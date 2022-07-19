@@ -24,14 +24,13 @@ def main(directory: Path) -> int:
 
         report = get_organization_validation_report(org_path)
 
-        if report.valid == False:
+        if not report.valid:
             code = 1
             print(report.to_summary())
-            break
+            continue
 
-        if code == 0:
-            print("OK")
-
+    if code == 0:
+        print("OK")
     return code
 
 
