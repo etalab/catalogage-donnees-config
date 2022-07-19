@@ -28,3 +28,6 @@ check: #- Check the code
 check-format: #- Format and check the code
 	make format
 	make check
+	
+check-organizations: #- Validate organizations schema
+	${bin}python -m scripts.check_organizations organizations
