@@ -11,6 +11,9 @@ from .entities import Organization
 def get_organizations_path(path: Path) -> List[Path]:
     org_paths: List[Path] = []
     for orgdir in Path(path).iterdir():
+        if not orgdir.is_dir() and orgdir.name == ".gitkeep":
+            continue
+
         org_path = orgdir / "organization.json"
         org_paths.append(org_path)
 
