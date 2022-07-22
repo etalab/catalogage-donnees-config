@@ -1,8 +1,8 @@
 # `catalogage-donnees-config`
 
-Ce répertoire contient des fichiers de configuration relatifs à l'instance https://catalogue.multi.coop de l'outil [catalogage-donnees](https://github.com/etalab/catalogage-donnees).
+Ce répertoire contient des fichiers de configuration relatifs à l'instance de production de l'outil [catalogage-donnees](https://github.com/etalab/catalogage-donnees) en cours de développement.
 
-Il permettra à des personnes habilitées de créer des organisations et leur catalogue.
+La première instance de l'outil sera le service connu sous le nom de `catalogue.data.gouv.fr`, coordonné par la DINUM.
 
 ## Démarrage rapide
 
