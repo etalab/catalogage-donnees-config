@@ -12,10 +12,14 @@ def test_get_org_paths() -> None:
 
     org_paths = get_organizations_path(root)
     assert len(org_paths) == 2
-
-    org_paths = sorted(path.relative_to(root) for path in org_paths)
-    assert str(org_paths[0]) == "test_orga_1/organization.json"
-    assert str(org_paths[1]) == "test_orga_2/organization.json"
+    assert (
+        str(org_paths[0])
+        == "tests/fixtures/with_well_formatted_organizations/test_orga_1/organization.json"  # noqa: E501
+    )
+    assert (
+        str(org_paths[1])
+        == "tests/fixtures/with_well_formatted_organizations/test_orga_2/organization.json"  # noqa: E501
+    )
 
 
 def test_get_organizations_list() -> None:
