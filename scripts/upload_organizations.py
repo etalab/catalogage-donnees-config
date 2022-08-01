@@ -17,19 +17,27 @@ def main(directory: Path, client: httpx.Client) -> int:
         payload = {"siret": organization.siret, "name": organization.name}
 
         try:
-            response = client.post("/organizations", json=payload)
+            response = client.post("/organizations/", json=payload)
             response.raise_for_status()
-        except httpx.HTTPStatusError as exc:
+        except (httpx.HTTPStatusError, httpx.HTTPError) as exc:
             print(
-                f"Error response {exc.response.status_code} "
-                f"while requesting {exc.request.url!r}."
+                f"ERROR: while requesting {exc.request.url!r} with {payload=}:",
+                file=sys.stderr,
             )
-            code = 1
-        except httpx.HTTPError:
             traceback.print_exc()
             code = 1
+            continue
+
+        if response.status_code == 201:
+            print(f"[created] {payload}")
+        elif response.status_code == 200:
+            print(f"[ok] {payload}")
         else:
-            print(f"Created organization {organization.name} with payload {payload}")
+            print(
+                f"ERROR: unexpected response status code: {response.status_code}",
+                file=sys.stderr,
+            )
+            code = 1
 
     return code
 
