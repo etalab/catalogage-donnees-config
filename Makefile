@@ -19,18 +19,12 @@ format: #- Format code
 	${bin}black ${pysources}
 	${bin}isort ${pysources}
 
-check: #- Check the code
+check: #- Check the code and organizations
 	${bin}black --check ${pysources}
 	${bin}flake8 ${pysources}
 	${bin}mypy ${pysources}
 	${bin}isort --check --diff ${pysources}
-
-check-format: #- Format and check the code
-	make format
-	make check
-	
-check-organizations: #- Validate organizations schema
 	${bin}python -m scripts.check_organizations organizations
 
-upload-organizations: #- Upload organizations
-	ENV="production" ${bin}python -m scripts.upload_organizations organizations
+upload: #- Upload organizations
+	${bin}python -m scripts.upload_organizations organizations

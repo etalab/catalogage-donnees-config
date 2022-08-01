@@ -1,5 +1,7 @@
+import pathlib
 import sys
 
+from frictionless import Resource, validate
 from lib.organization import (
     get_organizations_path,
     contains_one_organization_per_file,
@@ -29,7 +31,6 @@ def main(directory: Path) -> int:
 
     if code == 0:
         print("OK")
-
     return code
 
 

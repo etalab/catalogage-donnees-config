@@ -1,7 +1,9 @@
 # App
 frictionless==4.40.3
 frictionless[json]
+httpx==0.23.0
 pytest==7.1.2
+python-dotenv==0.20.0
 
 # Tooling
 black==22.3.0
