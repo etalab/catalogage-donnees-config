@@ -10,7 +10,10 @@ from lib.http_client import get_client
 from lib.organization import get_organizations
 
 
-def main(directory: Path, client: httpx.Client) -> int:
+def main(directory: Path, client: httpx.Client = None) -> int:
+    if client is None:
+        client = get_client()
+
     code = 0
 
     for organization in get_organizations(directory):
@@ -49,4 +52,4 @@ if __name__ == "__main__":
     parser.add_argument("directory", type=Path)
     args = parser.parse_args()
 
-    sys.exit(main(directory=args.directory, client=get_client()))
+    sys.exit(main(directory=args.directory))
