@@ -1,0 +1,27 @@
+name: Upload
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+jobs:
+  upload:
+    runs-on: "ubuntu-latest"
+
+    steps:
+      - uses: "actions/checkout@v3"
+
+      - uses: "actions/setup-python@v4"
+        with:
+          python-version: "3.10"
+          cache: pip
+
+      - name: "Install dependencies"
+        run: "make install"
+
+      - name: "Upload organizations"
+        run: "make upload"
+        env:
+          CATALOGAGE_API_URL: ${{ secrets.CATALOGAGE_API_URL }}
+          CATALOGAGE_API_KEY: ${{ secrets.CATALOGAGE_API_KEY }}
