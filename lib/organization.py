@@ -17,6 +17,10 @@ def get_organizations_path(path: Path) -> List[Path]:
         org_path = orgdir / "organization.json"
         org_paths.append(org_path)
 
+    # Order of iterdir() is not deterministic.
+    # Force it for cross-platform testing purposes.
+    org_paths = sorted(org_paths, key=lambda p: p.relative_to(path))
+
     return org_paths
 
 
