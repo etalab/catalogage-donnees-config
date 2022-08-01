@@ -55,6 +55,8 @@ Pour lancer les tests :
 make test
 ```
 
+(Un test supplémentaire qui interagit avec `http://localhost:3579` s'exécute si le serveur local de `catalogage-donnees` tourne et que vous avez [configuré](#configuration) les variables d'environnement en conséquence.)
+
 Pour formatter automatiquement le code :
 
 ```
@@ -66,6 +68,30 @@ Pour valider le code (format, linters, etc) et les organisations :
 ```
 make check
 ```
+
+Pour mettre en ligne manuellement les organisations nouvelles (ce script est normalement lancé par la CI, vous devrez donc être en possession des variables de configuration adéquates) :
+
+```
+make upload
+```
+
+### Configuration
+
+| Variable d'environnement | Description | Valeur par défaut |
+|---|---|---|
+| `CATALOGAGE_API_URL` | URL de l'API de l'instance de `catalogage-donnees` sur laquelle créer les organisations. | _Requis_ |
+| `CATALOGAGE_API_KEY` | Clé d'API utilisée pour les requêtes HTTP avec l'API `catalogage-donnees` | _Requis_ |
+
+Les valeurs liées à l'instance https://catalogue.multi.coop sont configurées dans les secrets GitHub Actions de ce dépôt.
+
+En local, des valeurs liées à un serveur `catalogage-donnees` local peuvent être définies dans un fichier `.env` :
+
+```bash
+CATALOGAGE_API_URL="http://localhost:3579"
+CATALOGAGE_API_KEY="..."  # (1)
+```
+
+(1) Doit correspondre à la variable `APP_CONFIG_REPO_API_KEY` côté `catalogage-donnees`. Voir [Configuration (Démarrage rapide) | catalogage-donnees](https://github.com/etalab/catalogage-donnees/blob/6d2c8d9de5069d40fa515d11782ddc66a1026de7/docs/fr/demarrage.md#configuration).
 
 ## Licence
 
