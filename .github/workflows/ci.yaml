@@ -21,7 +21,7 @@ jobs:
       - name: "Install dependencies"
         run: make install
 
-      - name: "Run code checks"
+      - name: "Run checks"
         run: make check
 
       - name: "Unit tests"
