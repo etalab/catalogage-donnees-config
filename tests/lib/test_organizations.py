@@ -13,7 +13,6 @@ def test_get_org_paths() -> None:
     org_paths = get_organizations_path(root)
     assert len(org_paths) == 2
 
-    org_paths = sorted(path.relative_to(root) for path in org_paths)
     assert str(org_paths[0]) == "test_orga_1/organization.json"
     assert str(org_paths[1]) == "test_orga_2/organization.json"
 
