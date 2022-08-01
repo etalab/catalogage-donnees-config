@@ -16,7 +16,7 @@ test: #- Run the test suite
 	${bin}pytest
 
 format: #- Format code
-	${bin}black ${pysources} --verbose
+	${bin}black ${pysources}
 	${bin}isort ${pysources}
 
 check: #- Check the code
@@ -31,7 +31,6 @@ check-format: #- Format and check the code
 	
 check-organizations: #- Validate organizations schema
 	${bin}python -m scripts.check_organizations organizations
-
 
 upload-organizations: #- Upload organizations
 	ENV="production" ${bin}python -m scripts.upload_organizations organizations

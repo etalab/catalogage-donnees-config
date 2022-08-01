@@ -2,7 +2,7 @@ import json
 from pathlib import Path
 from typing import List
 
-from frictionless import Resource, validate
+from frictionless import Field, Resource, Schema
 from frictionless.report import Report
 
 from .entities import Organization
@@ -11,6 +11,9 @@ from .entities import Organization
 def get_organizations_path(path: Path) -> List[Path]:
     org_paths: List[Path] = []
     for orgdir in Path(path).iterdir():
+        if not orgdir.is_dir() and orgdir.name == ".gitkeep":
+            continue
+
         org_path = orgdir / "organization.json"
         org_paths.append(org_path)
 
@@ -37,33 +40,14 @@ def contains_one_organization_per_file(path: Path) -> bool:
 
 
 def get_organization_validation_report(path: Path) -> Report:
+    schema = Schema(
+        fields=[
+            Field(name="name", title="Nom de l'organisation", type="string"),
+            Field(name="siret", title="Numéro SIRET de l'organisation", type="string"),
+        ]
+    )
 
-    template = {
-        "path": "...",
-        "name": "organization",
-        "profile": "tabular-data-resource",
-        "scheme": "file",
-        "format": "json",
-        "hashing": "md5",
-        "encoding": "utf-8",
-        "schema": {
-            "fields": [
-                {
-                    "name": "name",
-                    "title": "Nom de l'organisation",
-                    "type": "string",
-                },
-                {
-                    "name": "siret",
-                    "title": "Numéro SIRET de l'organisation",
-                    "type": "string",
-                },
-            ]
-        },
-    }
-    descriptor = template.copy()
-    descriptor["path"] = str(path)
+    with Resource(path=str(path), schema=schema) as resource:
+        report = resource.validate()
 
-    with Resource(descriptor=descriptor) as resource:
-        report = validate(resource, type="resource")
     return report

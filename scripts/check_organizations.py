@@ -1,7 +1,5 @@
-import pathlib
 import sys
 
-from frictionless import Resource, validate
 from lib.organization import (
     get_organizations_path,
     contains_one_organization_per_file,
@@ -24,13 +22,13 @@ def main(directory: Path) -> int:
 
         report = get_organization_validation_report(org_path)
 
-        if report.valid == False:
+        if not report.valid:
             code = 1
             print(report.to_summary())
-            break
+            continue
 
-        if code == 0:
-            print("OK")
+    if code == 0:
+        print("OK")
 
     return code
 
