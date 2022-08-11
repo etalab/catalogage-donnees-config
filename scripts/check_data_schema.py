@@ -21,7 +21,7 @@ def main(directory: Path) -> int:
             print(tabulate(errors, headers=["code", "message"]))
             continue
     if code == 0:
-        print("OK")
+        print(f"All data schema files are valid!\n")
     return code
 
 

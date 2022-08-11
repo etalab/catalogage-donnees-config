@@ -25,12 +25,13 @@ def main(directory: Path) -> int:
         report = get_organization_validation_report(org_path)
 
         if not report.valid:
+            print(f"Organization described in {org_path} is not valid \n")
             code = 1
             print(report.to_summary())
             continue
 
     if code == 0:
-        print("OK")
+        print("All organizations files are valid!")
     return code
 
 
