@@ -25,6 +25,7 @@ check: #- Check the code and organizations
 	${bin}mypy ${pysources}
 	${bin}isort --check --diff ${pysources}
 	${bin}python -m scripts.check_organizations organizations
+	${bin}python -m scripts.check_data_schema organizations
 
 upload: #- Upload organizations
-	${bin}python -m scripts.upload_organizations organizations
+	${bin}python -m scripts.test_check_data_schema organizations
