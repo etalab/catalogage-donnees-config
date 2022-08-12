@@ -15,13 +15,13 @@ def main(directory: Path) -> int:
     for org_path in get_schema_path(directory):
         report = validate(org_path)
         if not report.valid:
-            print(f"{org_path} schema is not valid\n")
+            print(f"{org_path} schema is not valid")
             code = 1
             errors = report.flatten(["code", "message"])
             print(tabulate(errors, headers=["code", "message"]))
             continue
     if code == 0:
-        print(f"All data schema files are valid!\n")
+        print(f"All data schema files are valid!")
     return code
 
 

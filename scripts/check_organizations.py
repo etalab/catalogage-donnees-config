@@ -25,7 +25,7 @@ def main(directory: Path) -> int:
         report = get_organization_validation_report(org_path)
 
         if not report.valid:
-            print(f"Organization described in {org_path} is not valid \n")
+            print(f"Organization described in {org_path} is not valid ")
             code = 1
             print(report.to_summary())
             continue
