@@ -5,23 +5,12 @@ from typing import List
 from frictionless import Field, Resource, Schema
 from frictionless.report import Report
 
+from .common import get_path
 from .entities import Organization
 
 
 def get_organizations_path(path: Path) -> List[Path]:
-    org_paths: List[Path] = []
-    for orgdir in Path(path).iterdir():
-        if not orgdir.is_dir() and orgdir.name == ".gitkeep":
-            continue
-
-        org_path = orgdir / "organization.json"
-        org_paths.append(org_path)
-
-    # Order of iterdir() is not deterministic.
-    # Force it for cross-platform testing purposes.
-    org_paths = sorted(org_paths, key=lambda p: p.relative_to(path))
-
-    return org_paths
+    return get_path(path, "organization.json")
 
 
 def get_organizations(path: Path) -> List[Organization]:
