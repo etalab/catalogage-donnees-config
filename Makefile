@@ -29,3 +29,4 @@ check: #- Check the code and organizations
 
 upload: #- Upload organizations
 	${bin}python -m scripts.upload_organizations organizations
+	${bin}python -m scripts.upload_catalog_schema organizations

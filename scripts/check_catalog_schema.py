@@ -3,7 +3,7 @@ import sys
 from tabulate import tabulate
 
 from frictionless import Resource, validate, Schema
-from lib.catalog_schema import get_schema_path
+from lib.catalog_schema import get_schema_paths
 
 
 import argparse
@@ -12,7 +12,7 @@ from pathlib import Path
 
 def main(directory: Path) -> int:
     code = 0
-    for org_path in get_schema_path(directory):
+    for org_path in get_schema_paths(directory):
         report = validate(org_path)
         if not report.valid:
             print(f"{org_path} schema is not valid")
