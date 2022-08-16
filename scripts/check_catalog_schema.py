@@ -3,7 +3,7 @@ import sys
 from tabulate import tabulate
 
 from frictionless import Resource, validate, Schema
-from lib.data_schema import get_schema_path
+from lib.catalog_schema import get_schema_path
 
 
 import argparse
