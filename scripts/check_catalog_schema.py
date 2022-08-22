@@ -1,7 +1,6 @@
 import pathlib
 import sys
 from tabulate import tabulate
-
 from frictionless import Resource, validate, Schema
 
 from lib.format_text import format_error_message, format_success_message
