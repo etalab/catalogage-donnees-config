@@ -1,33 +1,13 @@
 from pathlib import Path
 from typing import List
 
+from lib.constants import REQUIRED_FIELDS_NAME
+
 from .common import get_paths
 
 
 def get_schema_paths(path: Path) -> List[Path]:
     return get_paths(path, "catalog_schema.json")
-
-
-REQUIRED_FIELDS_NAME = [
-    "titre",
-    "description",
-    "mots_cles",
-    "nom_orga",
-    "siret_orga",
-    "id_alt_orga",
-    "service",
-    "si",
-    "contact_service",
-    "contact_personne",
-    "date_pub",
-    "date_maj",
-    "freq_maj",
-    "couv_geo",
-    "url",
-    "format",
-    "licence",
-    "producteur_type",
-]
 
 
 def has_field(field_name: str, field_list: List[str]) -> bool:
