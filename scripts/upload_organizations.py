@@ -8,6 +8,7 @@ import httpx
 
 from lib.http_client import get_client
 from lib.organization import get_organizations
+from lib.format_text import format_error_message, format_success_message
 
 
 def main(directory: Path, client: httpx.Client = None) -> int:
@@ -24,7 +25,9 @@ def main(directory: Path, client: httpx.Client = None) -> int:
             response.raise_for_status()
         except (httpx.HTTPStatusError, httpx.HTTPError) as exc:
             print(
-                f"ERROR: while requesting {exc.request.url!r} with {payload=}:",
+                format_error_message(
+                    f"ERROR: while requesting {exc.request.url!r} with {payload=}:"
+                ),
                 file=sys.stderr,
             )
             traceback.print_exc()
@@ -32,12 +35,14 @@ def main(directory: Path, client: httpx.Client = None) -> int:
             continue
 
         if response.status_code == 201:
-            print(f"[created] {payload}")
+            print(format_success_message(f"[created] {payload}"))
         elif response.status_code == 200:
-            print(f"[ok] {payload}")
+            print(format_success_message(f"[ok] {payload}"))
         else:
             print(
-                f"ERROR: unexpected response status code: {response.status_code}",
+                format_error_message(
+                    f"ERROR: unexpected response status code: {response.status_code}"
+                ),
                 file=sys.stderr,
             )
             code = 1
