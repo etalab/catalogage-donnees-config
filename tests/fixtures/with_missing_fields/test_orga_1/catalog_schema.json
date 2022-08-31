@@ -9,13 +9,13 @@
             "title": "Roselyne Aliacar",
             "role": "author",
             "organisation": "Ministère de la Culture",
-            "email": "roselyne.aliacar@culture.gouv.fr"
+            "email": "demo@catalogue.data.gouv.fr"
         },
         {
             "title": "Johan Richer",
             "role": "author",
             "organisation": "multi",
-            "email": "johan.richer@multi.coop"
+            "email": "dev@catalogue.data.gouv.fr"
         }
     ],
     "version": "0.1.0",

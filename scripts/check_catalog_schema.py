@@ -24,19 +24,22 @@ def main(directory: Path) -> int:
                 print(tabulate(errors, headers=["code", "message"]))
                 continue
 
-            missing_fields = get_missing_fields(schema.field_names)
-
-            if len(missing_fields) > 0:
-                missing_fields_string = ",".join(missing_fields)
-                print(
-                    format_error_message(
-                        f"Error: {missing_fields_string} fields are missing in the schema in {org_path}"
-                    )
-                )
-                code = 1
-        except:
-            print(format_error_message("Error: An error has occured"))
+        except FileNotFoundError as exc:
+            print(format_error_message(f"Error: {exc}"))
             code = 1
+            continue
+
+        missing_fields = get_missing_fields(schema.field_names)
+
+        if len(missing_fields) > 0:
+            missing_fields_string = ",".join(missing_fields)
+            print(
+                format_error_message(
+                    f"Error: {missing_fields_string} fields are missing in the schema in {org_path}"
+                )
+            )
+            code = 1
+
     if code == 0:
 
         print(format_success_message(f"Success: All data schema files are valid!"))

@@ -1,7 +1,7 @@
 from pathlib import Path
-from typing import List
+from typing import List, Set
 
-from lib.constants import REQUIRED_FIELDS_NAME
+from lib.constants import COMMON_SCHEMA_FIELD_NAMES
 
 from .common import get_paths
 
@@ -14,9 +14,5 @@ def has_field(field_name: str, field_list: List[str]) -> bool:
     return any(field_name in field for field in field_list)
 
 
-def get_missing_fields(field_names: List[str]) -> List[str]:
-    missing_fields: List[str] = []
-    for ref in REQUIRED_FIELDS_NAME:
-        if not has_field(field_name=ref, field_list=field_names):
-            missing_fields.append(ref)
-    return missing_fields
+def get_missing_fields(field_names: List[str]) -> Set[str]:
+    return COMMON_SCHEMA_FIELD_NAMES - set(field_names)

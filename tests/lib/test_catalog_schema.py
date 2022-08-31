@@ -37,7 +37,7 @@ def test_has_no_missing_fields() -> None:
         "producteur_type",
     ]
 
-    assert get_missing_fields(fields) == []
+    assert get_missing_fields(fields) == set([])
 
 
 def test_has_missing_fields() -> None:
@@ -64,4 +64,4 @@ def test_has_missing_fields() -> None:
     print(missing_fields)
 
     assert len(missing_fields) == 2
-    assert missing_fields == ["licence", "producteur_type"]
+    assert missing_fields == set(["licence", "producteur_type"])
