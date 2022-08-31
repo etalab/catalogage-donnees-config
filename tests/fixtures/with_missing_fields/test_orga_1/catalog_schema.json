@@ -1,0 +1,59 @@
+{
+    "$schema": "https://frictionlessdata.io/schemas/table-schema.json",
+    "name": "catalogue-donnees-culture",
+    "title": "Catalogue de données",
+    "description": "Spécification du catalogue des jeux de données produits par le Ministère de la Culture",
+    "countryCode": "FR",
+    "contributors": [
+        {
+            "title": "Roselyne Aliacar",
+            "role": "author",
+            "organisation": "Ministère de la Culture",
+            "email": "demo@catalogue.data.gouv.fr"
+        },
+        {
+            "title": "Johan Richer",
+            "role": "author",
+            "organisation": "multi",
+            "email": "dev@catalogue.data.gouv.fr"
+        }
+    ],
+    "version": "0.1.0",
+    "created": "2022-07-19",
+    "lastModified": "2022-07-19",
+    "licenses": [
+        {
+            "title": "Etalab Licence Ouverte 2.0",
+            "name": "etalab-2.0",
+            "path": "https://spdx.org/licenses/etalab-2.0.html"
+        }
+    ],
+    "fields": [
+        {
+            "name": "titre",
+            "title": "Titre",
+            "description": "Nom du jeu de données.",
+            "type": "string",
+            "constraints": {
+                "required": true
+            }
+        },
+        {
+            "name": "description",
+            "title": "Description",
+            "description": "Présentation du jeu de données.",
+            "type": "string",
+            "constraints": {
+                "required": true
+            }
+        }
+    ],
+    "custom_checks": [
+        {
+            "name": "french-siret-value",
+            "params": {
+                "column": "siret_orga"
+            }
+        }
+    ]
+}
