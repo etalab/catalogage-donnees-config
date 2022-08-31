@@ -62,7 +62,6 @@ def test_existing_orgs(capsys: pytest.CaptureFixture) -> None:
     )
     assert code == 0
 
-    print(added)
     assert added == {"55566688899991", "55566688899992"}
     captured = capsys.readouterr()
     assert "[created]" in captured.out
