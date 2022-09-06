@@ -12,3 +12,4 @@ flake8==4.0.1
 mypy==0.961
 pytest-cov==3.0.0
 types-tabulate
+colored==1.4.3

@@ -2,6 +2,7 @@ import pathlib
 import sys
 
 from frictionless import Resource, validate
+from lib.format_text import format_error_message, format_success_message
 from lib.organization import (
     get_organizations_path,
     contains_one_organization_per_file,
@@ -17,7 +18,9 @@ def main(directory: Path) -> int:
     for org_path in get_organizations_path(directory):
         if not contains_one_organization_per_file(org_path):
             print(
-                f"an organization file must contain only one organization. Multiple organizations found in {org_path}"
+                format_error_message(
+                    f"Error: an organization file must contain only one organization. Multiple organizations found in {org_path}"
+                )
             )
             code = 1
             break
@@ -25,13 +28,17 @@ def main(directory: Path) -> int:
         report = get_organization_validation_report(org_path)
 
         if not report.valid:
-            print(f"Organization described in {org_path} is not valid ")
+            print(
+                format_error_message(
+                    f"Error: Organization described in {org_path} is not valid "
+                )
+            )
             code = 1
             print(report.to_summary())
             continue
 
     if code == 0:
-        print("All organizations files are valid!")
+        print(format_success_message("Success: All organizations files are valid!"))
     return code
 
 
