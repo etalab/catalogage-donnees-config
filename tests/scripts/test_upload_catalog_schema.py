@@ -35,12 +35,14 @@ def test_upload_new_catalog_schema(capsys: pytest.CaptureFixture) -> None:
     assert "[created] {'organization_siret': '55566688899992'}" in captured.out
 
 
-def test_existing_orgs(capsys: pytest.CaptureFixture) -> None:
+def test_existing_catalog_schema(capsys: pytest.CaptureFixture) -> None:
     added = set()
     existing = set()
 
     def app(request: httpx.Request) -> httpx.Response:
         payload = json.loads(request.content)
+
+        print(payload)
 
         if payload["organization_siret"] in added:
             existing.add(payload["organization_siret"])

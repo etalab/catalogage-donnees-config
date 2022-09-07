@@ -35,7 +35,7 @@ def main(directory: Path) -> int:
             )
             code = 1
             print(report.to_summary())
-            continue
+            break
 
     if code == 0:
         print(format_success_message("Success: All organizations files are valid!"))
