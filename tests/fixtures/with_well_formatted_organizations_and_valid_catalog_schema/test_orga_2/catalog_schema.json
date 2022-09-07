@@ -1,0 +1,377 @@
+{
+    "$schema": "https://frictionlessdata.io/schemas/table-schema.json",
+    "name": "catalogue-donnees-culture",
+    "title": "Catalogue de données",
+    "description": "Spécification du catalogue des jeux de données produits par le Ministère de la Culture",
+    "countryCode": "FR",
+    "contributors": [
+        {
+            "title": "Roselyne Aliacar",
+            "role": "author",
+            "organisation": "Ministère de la Culture",
+            "email": "demo@catalogue.data.gouv.fr"
+        },
+        {
+            "title": "Johan Richer",
+            "role": "author",
+            "organisation": "multi",
+            "email": "dev@catalogue.data.gouv.fr"
+        }
+    ],
+    "version": "0.1.0",
+    "created": "2022-07-19",
+    "lastModified": "2022-07-19",
+    "licenses": [
+        {
+            "title": "Etalab Licence Ouverte 2.0",
+            "name": "etalab-2.0",
+            "path": "https://spdx.org/licenses/etalab-2.0.html"
+        }
+    ],
+    "fields": [
+        {
+            "name": "titre",
+            "title": "Titre",
+            "description": "Nom du jeu de données.",
+            "type": "string",
+            "constraints": {
+                "required": true
+            }
+        },
+        {
+            "name": "description",
+            "title": "Description",
+            "description": "Présentation du jeu de données.",
+            "type": "string",
+            "constraints": {
+                "required": true
+            }
+        },
+        {
+            "name": "mots_cles",
+            "title": "Mots clés",
+            "description": "Liste de mots ou \"tags\" associés au jeu de données, séparés par une virgule.",
+            "type": "string",
+            "constraints": {
+                "required": true
+            }
+        },
+        {
+            "name": "nom_orga",
+            "title": "Organisation",
+            "description": "Nom de l'organisation qui produit le jeu de données.",
+            "type": "string",
+            "constraints": {
+                "required": true
+            }
+        },
+        {
+            "name": "siret_orga",
+            "title": "Numéro SIRET",
+            "description": "Numéro SIRET de l'organisation qui produit le jeu de données.",
+            "type": "string",
+            "example": "18006701900430"
+        },
+        {
+            "name": "id_alt_orga",
+            "title": "Identifiant alternatif",
+            "description": "Identifiant de l'organisation, si elle ne possède pas de numéro SIRET. Dans le cas d'une association, par exemple, il s'agit de son numéro RNA.",
+            "type": "string",
+            "example": "W343008792"
+        },
+        {
+            "name": "service",
+            "title": "Service",
+            "description": "Nom de l'entité (direction, sous-direction, service...) qui produit le jeu de données au sein de l'organisation.",
+            "type": "string",
+            "constraints": {
+                "required": true
+            }
+        },
+        {
+            "name": "si",
+            "title": "Système d'information",
+            "description": "Nom du système d'information (base de données ou application métier) à partir duquel a été extrait le jeu de données.",
+            "type": "string"
+        },
+        {
+            "name": "contact_service",
+            "title": "Contact service",
+            "description": "Adresse email de l'entité qui produit le jeu de données au sein de l'organisation.",
+            "type": "string",
+            "format": "email"
+        },
+        {
+            "name": "contact_personne",
+            "title": "Contact",
+            "description": "Adresse(s) email des personnes ayant des informations sur le jeu de données ou participant à sa production.",
+            "type": "string",
+            "format": "email",
+            "constraints": {
+                "required": true
+            }
+        },
+        {
+            "name": "date_pub",
+            "title": "Date de première publication",
+            "description": "Date de la publication intiale du jeu de données.",
+            "type": "date",
+            "example": "2005-01-14"
+        },
+        {
+            "name": "date_maj",
+            "title": "Date de mise à jour",
+            "description": "Date de la dernière modification effective du jeu de données.",
+            "type": "date",
+            "example": "2019-05-28"
+        },
+        {
+            "name": "freq_maj",
+            "title": "Fréquence de mise à jour",
+            "description": "Périodicité suivant laquelle des modifications sont apportées au jeu de données.",
+            "type": "string",
+            "example": "Annuelle"
+        },
+        {
+            "name": "couv_geo",
+            "title": "Couverture géographique",
+            "description": "Description du territoire que couvre le jeu de données.",
+            "type": "string",
+            "example": "France métropolitaine",
+            "constraints": {
+                "required": true
+            }
+        },
+        {
+            "name": "url",
+            "title": "URL",
+            "description": "Page web associée au jeu de données.",
+            "type": "string",
+            "format": "uri",
+            "example": "https://www.data.gouv.fr/fr/datasets/donnees-brutes-de-l-inventaire-forestier/"
+        },
+        {
+            "name": "format",
+            "title": "Format",
+            "description": "Liste des formats associés à ce jeu de données, séparés par une virgule.",
+            "type": "string",
+            "example": "CSV,XLSX",
+            "constraints": {
+                "required": true
+            }
+        },
+        {
+            "name": "licence",
+            "title": "Licence",
+            "description": "Licence de réutilisation appliquée au jeu de données.",
+            "type": "string",
+            "example": "Licence ouverte"
+        },
+        {
+            "name": "producteur_type",
+            "title": "Type de producteur",
+            "description": "Type de l'entité qui produit le jeu de données au sein du Ministère de la Culture.",
+            "type": "string",
+            "constraints": {
+                "enum": [
+                    "1. Administration centrale",
+                    "2. Direction régionale des affaires culturelles",
+                    "3. Service à compétence nationale"
+                ]
+            }
+        },
+        {
+            "name": "direction",
+            "title": "Direction",
+            "description": "Nom de l'entité (direction) qui produit le jeu de données au sein du Ministère de la Culture",
+            "type": "string",
+            "constraints": {
+                "enum": [
+                    "1. Secrétariat général",
+                    "1. Direction générale des patrimoines et de l'architecture",
+                    "1. Direction générale de la création artistique",
+                    "1. Direction générale des médias et des industries culturelles",
+                    "1. Délégation générale à la transmission aux territoires et à la démocratie culturelle",
+                    "1. Délégation générale à la langue française et aux langues de France",
+                    "1. Centre national du cinéma et de l'image animée",
+                    "2. DRAC Auvergne-Rhône-Alpes",
+                    "2. DRAC Bourgogne-France-Comté",
+                    "2. DRAC Bretagne",
+                    "2. DRAC Centre-Val de Loire",
+                    "2. DRAC Corse",
+                    "2. DRAC Grand-Est",
+                    "2. DRAC Hauts-de-France",
+                    "2. DRAC Île-de-France",
+                    "2. DRAC Normandie",
+                    "2. DRAC Nouvelle Aquitaine",
+                    "2. DRAC Occitanie",
+                    "2. DRAC Pays-de-la-Loire",
+                    "2. DRAC Provence-Alpes-Côte d'Azur",
+                    "2. DAC Guadeloupe",
+                    "2. DAC Martinique",
+                    "2. DAC Océan Indien",
+                    "2. DAC Mayotte",
+                    "2. Direction de la culture, de la jeunesse et des sports de Guyane",
+                    "2. Mission aux affaires culturelles de Nouvelle-Calédonie",
+                    "2. Mission aux affaires culturelles en Polynésie française",
+                    "2. Mission Saint-Pierre et Miquelon",
+                    "3. Archives nationales",
+                    "3. Archives nationales d'Outre-Mer",
+                    "3. Archives nationales du monde du travail",
+                    "3. Centre de recherche et de restauration des musées de France (C2RMF)",
+                    "3. Département des recherches archéologiques subaquatiques et sous-marines (DRASSM)",
+                    "3. Laboratoire de recherche des monuments historiques (LRMH)",
+                    "3. Médiathèque de l'architecture et du patrimoine",
+                    "3. Mobilier national et manufactures nationales des Gobelins, de Beauvais et de la Savonnerie",
+                    "3. Musée Clémenceau et de Lattre de Tassigny",
+                    "3. Musée d'Archéologie nationale et domaine national de Saint-Germain-en-Laye",
+                    "3. Musée de la Renaissance au château d'Écouen",
+                    "3. Musée de Port-Royal des Champs",
+                    "3. Musée de la Préhistoire",
+                    "3. Musée des châteaux de Malmaison et de Bois-Préau (annexes : maison Bonaparte et musées de l'île d'Aix)",
+                    "3. Musée des plans-reliefs",
+                    "3. Musée du Moyen Age, thermes et hôtel de Cluny",
+                    "3. Musée Magnin",
+                    "3. Musée national et domaine du château de Pau",
+                    "3. Musées et domaines de Compiègne et Blérancourt",
+                    "3. Musées nationaux du XXe siècle des Alpes-Maritimes (musée Fernand Léger, musée Marc Chagall, musée La guerre et la paix de Picasso)"
+                ]
+            }
+        },
+        {
+            "name": "domaine",
+            "title": "Domaine",
+            "description": "Nom du domaine associé au jeu de données.",
+            "type": "string",
+            "constraints": {
+                "enum": [
+                    "Pluridisciplinaire",
+                    "Audiovisuel",
+                    "Livres et Presse",
+                    "Archives",
+                    "Patrimoine",
+                    "Architecture",
+                    "Artisanat d'art",
+                    "Arts visuels",
+                    "Spectacle vivant",
+                    "Bibliothèques",
+                    "Gestion et administration",
+                    "Langues"
+                ]
+            }
+        },
+        {
+            "name": "sous_domaine",
+            "title": "Sous-domaine",
+            "description": "Nom du sous-domaine associé au jeu de données.",
+            "type": "string",
+            "constraints": {
+                "enum": [
+                    "Archéologie",
+                    "Arts plastiques",
+                    "Autre spectacle vivant",
+                    "Danse",
+                    "Design et mode",
+                    "Film et cinéma",
+                    "Finance",
+                    "Langue française",
+                    "Langues de France",
+                    "Livre",
+                    "Monuments",
+                    "Multimedia",
+                    "Musées",
+                    "Musique",
+                    "Musique enregistrée",
+                    "Organisation",
+                    "Photographie",
+                    "Presse",
+                    "Radio",
+                    "Ressources Humaines",
+                    "Télévision",
+                    "Théâtre",
+                    "Vidéo"
+                ]
+            }
+        },
+        {
+            "name": "donnees_qualite",
+            "title": "Qualité des données",
+            "description": "Le jeu de données nécessite-t-il selon vous un accompagnement dans la montée en qualité des données ? si oui, lequel ?",
+            "type": "string"
+        },
+        {
+            "name": "donnees_geoloc",
+            "title": "Données géolocalisées",
+            "description": "Ces données sont-elles géolocalisées ?",
+            "type": "boolean",
+            "trueValues": [
+                "Oui"
+            ],
+            "falseValues": [
+                "Non"
+            ]
+        },
+        {
+            "name": "donnees_taille",
+            "title": "Taille du jeu de données",
+            "description": "Information sur la volumétrie et l'unité de mesure (taille du fichier, nombre d'entrées ou d'enregistrements...) associées au jeu de données.",
+            "type": "string"
+        },
+        {
+            "name": "referentiel",
+            "title": "Référentiel ou norme",
+            "description": "Ce jeu de données contient-il un référentiel ou une norme ? si oui, lequel ?",
+            "type": "string"
+        },
+        {
+            "name": "donnees_diffusion",
+            "title": "Perspectives de diffusion",
+            "description": "Ce jeu de données peut-il être ouvert ? si non, pourquoi ? (Pour plus d'informations, [lire le guide d'Etalab](https://guides.etalab.gouv.fr/juridique/ouverture/).)",
+            "type": "string"
+        },
+        {
+            "name": "donnees_perso",
+            "title": "Données à caractère personnel",
+            "description": "Ce jeu de données contient-il des [données à caractère personnel](https://guides.etalab.gouv.fr/juridique/ouverture/#que-faire-si-mes-documents-administratifs-contiennent-des-donnees-a-caractere-personnel) ?.",
+            "type": "boolean",
+            "trueValues": [
+                "Oui"
+            ],
+            "falseValues": [
+                "Non"
+            ]
+        },
+        {
+            "name": "donnees_secret",
+            "title": "Données confidentielles",
+            "description": "Ce jeu de données contient-il des [secrets légaux](https://guides.etalab.gouv.fr/juridique/ouverture/#que-faire-si-mes-documents-administratifs-contiennent-des-secrets-legaux) ?",
+            "type": "boolean",
+            "trueValues": [
+                "Oui"
+            ],
+            "falseValues": [
+                "Non"
+            ]
+        },
+        {
+            "name": "donnees_pi",
+            "title": "Propriété intellectuelle",
+            "description": "Le Ministère de la Culture peut-il se prévaloir d'un [droit de propriété intellectuelle](https://guides.etalab.gouv.fr/juridique/reutilisation/#le-cas-de-la-propriete-intellectuelle) sur le jeu de données ?",
+            "type": "boolean",
+            "trueValues": [
+                "Oui"
+            ],
+            "falseValues": [
+                "Non"
+            ]
+        }
+    ],
+    "custom_checks": [
+        {
+            "name": "french-siret-value",
+            "params": {
+                "column": "siret_orga"
+            }
+        }
+    ]
+}
