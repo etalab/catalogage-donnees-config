@@ -32,13 +32,13 @@ def test_get_organizations_list() -> None:
 def test_contains_one_organization_per_file() -> None:
 
     organization_file_path = Path(
-        "tests/fixtures/with_badly_formatted_organizations/test_orga_1/organization.json"  # noqa: E501
+        "tests/fixtures/with_more_than_one_organization_in_a_single_file/test_orga_1/organization.json"  # noqa: E501
     )
     assert contains_one_organization_per_file(organization_file_path)
 
 
 def test_does_not_contain_one_organization_per_file() -> None:
     organization_file_path = Path(
-        "tests/fixtures/with_badly_formatted_organizations/test_orga_bad/organization.json"  # noqa: E501
+        "tests/fixtures/with_more_than_one_organization_in_a_single_file/test_multiple_organization/organization.json"  # noqa: E501
     )
     assert not contains_one_organization_per_file(organization_file_path)

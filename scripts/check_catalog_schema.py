@@ -1,11 +1,10 @@
 import pathlib
 import sys
 from tabulate import tabulate
-from frictionless import Resource, validate, Schema
+from frictionless import Resource, validate, Schema, FrictionlessException
 
 from lib.format_text import format_error_message, format_success_message
 from lib.catalog_schema import get_schema_paths, get_missing_fields
-
 
 import argparse
 from pathlib import Path
@@ -24,7 +23,7 @@ def main(directory: Path) -> int:
                 print(tabulate(errors, headers=["code", "message"]))
                 continue
 
-        except FileNotFoundError as exc:
+        except FrictionlessException as exc:
             print(format_error_message(f"Error: {exc}"))
             code = 1
             continue
