@@ -16,3 +16,7 @@ def has_field(field_name: str, field_list: List[str]) -> bool:
 
 def get_missing_fields(field_names: List[str]) -> Set[str]:
     return COMMON_SCHEMA_FIELD_NAMES - set(field_names)
+
+
+def get_extra_fields(field_names: List[str]) -> Set[str]:
+    return set(field_names) - COMMON_SCHEMA_FIELD_NAMES
