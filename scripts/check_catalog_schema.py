@@ -42,8 +42,7 @@ def main(directory: Path) -> int:
 
         extra_fields = get_extra_fields(schema.field_names)
 
-        if len(extra_fields):
-            for extra_field in extra_fields:
+        for extra_field in extra_fields:
                 field = schema.get_field(extra_field)
                 if not (field.type == "boolean" or field.type == "string"):
                     print(
