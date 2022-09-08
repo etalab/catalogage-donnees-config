@@ -44,7 +44,7 @@ def main(directory: Path) -> int:
 
         for extra_field in extra_fields:
                 field = schema.get_field(extra_field)
-                if not (field.type == "boolean" or field.type == "string"):
+                if field.type not in ("boolean", "string"):
                     print(
                         format_error_message(
                             f"Error: {extra_field} field must be a boolean or string"
