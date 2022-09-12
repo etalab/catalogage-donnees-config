@@ -2,9 +2,15 @@ import pathlib
 import sys
 from tabulate import tabulate
 from frictionless import Resource, validate, Schema, FrictionlessException
+from typing import Set
 
 from lib.format_text import format_error_message, format_success_message
-from lib.catalog_schema import get_schema_paths, get_missing_fields
+from lib.catalog_schema import (
+    get_schema_paths,
+    get_missing_fields,
+    get_extra_fields,
+    get_unsupported_constraints,
+)
 
 import argparse
 from pathlib import Path
@@ -38,6 +44,28 @@ def main(directory: Path) -> int:
                 )
             )
             code = 1
+            break
+
+        extra_fields = get_extra_fields(schema.field_names)
+
+        for extra_field in extra_fields:
+            field = schema.get_field(extra_field)
+            if field.type not in ("boolean", "string"):
+                print(
+                    format_error_message(
+                        f"Error: {extra_field} field must be a boolean or string"
+                    )
+                )
+                code = 1
+            break
+            if len(get_unsupported_constraints(field.constraints)) != 0:
+                print(
+                    format_error_message(
+                        f"Error: {field} in {org_path} has unsupported constraint. Only constraint of enum type is supported"
+                    )
+                )
+            code = 1
+            break
 
     if code == 0:
 
