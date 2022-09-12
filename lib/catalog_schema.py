@@ -18,5 +18,9 @@ def get_missing_fields(field_names: List[str]) -> Set[str]:
     return COMMON_SCHEMA_FIELD_NAMES - set(field_names)
 
 
+def get_unsupported_constraints(constraints: List[str]) -> Set[str]:
+    return set(constraints) - {"enum"}
+
+
 def get_extra_fields(field_names: List[str]) -> Set[str]:
     return set(field_names) - COMMON_SCHEMA_FIELD_NAMES

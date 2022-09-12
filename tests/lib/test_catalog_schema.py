@@ -86,4 +86,4 @@ def test_has_extra_fields() -> None:
         "extra_field_1",
     ]
 
-    assert get_extra_fields(fields) == set(["extra_field_1"])
+    assert get_extra_fields(fields) == {"extra_field_1"}
