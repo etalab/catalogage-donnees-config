@@ -5,12 +5,12 @@ from typing import List
 from frictionless import Field, Resource, Schema
 from frictionless.report import Report
 
-from .common import get_paths
+from .common import get_paths_of
 from .entities import Organization
 
 
 def get_organizations_path(path: Path) -> List[Path]:
-    return get_paths(path, "organization.json")
+    return get_paths_of(path, "organization.json")
 
 
 def get_organizations(path: Path) -> List[Organization]:

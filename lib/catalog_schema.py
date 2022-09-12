@@ -3,11 +3,11 @@ from typing import List, Set
 
 from lib.constants import COMMON_SCHEMA_FIELD_NAMES
 
-from .common import get_paths
+from .common import get_paths_of
 
 
-def get_schema_paths(path: Path) -> List[Path]:
-    return get_paths(path, "catalog_schema.json")
+def get_schema_paths(directory_path: Path) -> List[Path]:
+    return get_paths_of(directory_path, "catalog_schema.json")
 
 
 def has_field(field_name: str, field_list: List[str]) -> bool:
