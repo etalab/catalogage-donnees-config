@@ -240,6 +240,12 @@
       }
     },
     {
+      "name": "sous_direction",
+      "title": "Sous direction",
+      "description": "Nom de la sous-direction qui produit le jeu de données au sein du Ministère de la Culture",
+      "type": "string"
+    },
+    {
       "name": "domaine",
       "title": "Domaine",
       "description": "Nom du domaine associé au jeu de données.",
