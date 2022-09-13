@@ -18,12 +18,12 @@ from pathlib import Path
 
 def main(directory: Path) -> int:
     code = 0
-    for org_path in get_schema_paths(directory):
+    for schema_path in get_schema_paths(directory):
         try:
-            schema = Schema(org_path)
+            schema = Schema(schema_path)
             report = schema.validate()
             if not report.valid:
-                print(format_error_message(f"Error: {org_path} schema is not valid"))
+                print(format_error_message(f"Error: {schema_path} schema is not valid"))
                 code = 1
                 errors = report.flatten(["code", "message"])
                 print(tabulate(errors, headers=["code", "message"]))
@@ -40,7 +40,7 @@ def main(directory: Path) -> int:
             missing_fields_string = ",".join(missing_fields)
             print(
                 format_error_message(
-                    f"Error: {missing_fields_string} fields are missing in the schema in {org_path}"
+                    f"Error: {missing_fields_string} fields are missing in the schema in {schema_path}"
                 )
             )
             code = 1
@@ -61,7 +61,7 @@ def main(directory: Path) -> int:
             if len(get_unsupported_constraints(field.constraints)) != 0:
                 print(
                     format_error_message(
-                        f"Error: {field} in {org_path} has unsupported constraint. Only constraint of enum type is supported"
+                        f"Error: {field} in {schema_path} has unsupported constraint. Only constraint of enum type is supported"
                     )
                 )
             code = 1
