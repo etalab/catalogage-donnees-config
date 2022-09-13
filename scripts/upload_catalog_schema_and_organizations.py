@@ -1,27 +1,129 @@
-# Récupérer les chemins de fichier pour les schéma
+import argparse
+import sys
+import traceback
+from pathlib import Path
+import json
+import dotenv
+import httpx
 
-# Pour chaque chemin
-#     Récupérer l'organization
-#      Récupérer le SIRET de l'organization
-#      Récupérer le schéma
+from lib.http_client import get_client
+from lib.organization import get_organization
+from lib.catalog_schema import get_schema, get_extra_fields
+from frictionless import Schema
+from lib.common import get_paths, transform_to_field_payload
+from lib.format_text import format_error_message, format_success_message
 
-#      Uploader l'organization
-#      Si l'upload de l'organization échoue
-#         Afficher un message d'erreur
-#         Passer à la prochaine itération
-#      Si le status code retourné par l'API est 200
-#         Indiquer à l'utilisateur que tout est ok
-#      Si le status code retourné par l'API est 201
-#         Inidquer à l'utilisateur qu'il y a eu une création
 
-#       Uploader le schéma
-#       Si l'upload du schéma échoue
-#         Afficher un message d'erreur
-#         Passer à la prochaine itération
+def main(directory: Path, client: httpx.Client = None) -> int:
+    if client is None:
+        client = get_client()
 
-#       Est-ce que le schéma possède des champs complémentaires ?
-#             Si oui envoyer à l'API les champs complémentaires
-#      Si le status code retourné par l'API est 200
-#         Indiquer à l'utilisateur que tout est ok
-#      Si le status code retourné par l'API est 201
-#         Inidiquer à l'utilisateur qu'il y a eu une création
+    for path in get_paths(directory):
+        organization_path = path / "organization.json"
+        organization = get_organization(organization_path)
+
+        schema_path = path / "catalog_schema.json"
+        schema = get_schema(schema_path)
+
+        payload = {"siret": organization.siret, "name": organization.name}
+
+        # Upload organization
+
+        try:
+            response = client.post("/organizations/", json=payload)
+            response.raise_for_status()
+        except (httpx.HTTPStatusError, httpx.HTTPError) as exc:
+            print(
+                format_error_message(
+                    f"ERROR: while requesting {exc.request.url!r} with {payload=}:"
+                ),
+                file=sys.stderr,
+            )
+            traceback.print_exc()
+            code = 1
+            break
+
+        if response.status_code == 201:
+            print(
+                format_success_message(
+                    f"[created] Organization {organization.name} with {payload}"
+                )
+            )
+        elif response.status_code == 200:
+            print(
+                format_success_message(
+                    f"[OK] Organization {organization.name} with {payload}"
+                )
+            )
+        else:
+            print(
+                format_error_message(
+                    f"ERROR: unexpected response status code: {response.status_code}"
+                ),
+                file=sys.stderr,
+            )
+            code = 1
+            break
+
+        # Upload catalog schema
+        friction_less_schema = Schema(schema_path)
+        extra_fields = get_extra_fields(friction_less_schema.field_names)
+        schema_fields = schema.get("fields")
+        fields_payload = []
+
+        for schema_field in schema_fields:
+            if schema_field["name"] in extra_fields:
+                fields_payload.append(transform_to_field_payload(schema_field))
+        try:
+            payload = {
+                "organization_siret": organization.siret,
+                "extra_fields": fields_payload,
+            }
+
+            response = client.post("/catalogs/", json=payload)
+            response.raise_for_status()
+        except (httpx.HTTPStatusError, httpx.HTTPError) as exc:
+
+            print(
+                format_error_message(
+                    f"ERROR: while requesting {exc.request.url!r} with {payload=}:"
+                ),
+                file=sys.stderr,
+            )
+            traceback.print_exc()
+            code = 1
+            break
+
+        if response.status_code == 201:
+            print(
+                format_success_message(
+                    f"[created] Catalog schema for {organization.name}"
+                )
+            )
+        elif response.status_code == 200:
+            print(
+                format_success_message(f"[OK] Catalog schema for {organization.name}")
+            )
+        else:
+            print(
+                format_error_message(
+                    f"ERROR: unexpected response status code: {response.status_code}"
+                ),
+                file=sys.stderr,
+            )
+            code = 1
+            break
+
+    code = 0
+
+    return code
+
+
+if __name__ == "__main__":
+    dotenv.load_dotenv()
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument("directory", type=Path)
+    args = parser.parse_args()
+
+    sys.exit(main(directory=args.directory))

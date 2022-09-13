@@ -13,17 +13,19 @@ def get_organizations_path(path: Path) -> List[Path]:
     return get_paths_of(path, "organization.json")
 
 
+def get_organization(path: Path) -> Organization:
+    data = json.loads(path.read_text())
+    organization = data[0]
+    new_organization = Organization(
+        siret=organization["siret"], name=organization["name"]
+    )
+    return new_organization
+
+
 def get_organizations(path: Path) -> List[Organization]:
     organizations: List[Organization] = []
-
     for org_path in get_organizations_path(path):
-        data = json.loads(org_path.read_text())
-        organization = data[0]
-        new_organization = Organization(
-            siret=organization["siret"], name=organization["name"]
-        )
-        organizations.append(new_organization)
-
+        organizations.append(get_organization(org_path))
     return organizations
 
 
