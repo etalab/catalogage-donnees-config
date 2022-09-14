@@ -10,11 +10,12 @@ from lib.http_client import get_client
 from lib.organization import get_organization
 from lib.catalog_schema import get_schema, get_extra_fields
 from frictionless import Schema
-from lib.common import get_paths, transform_to_field_payload
+from lib.common import get_paths, transform_schema_field_to_payload
 from lib.format_text import format_error_message, format_success_message
 
 
 def main(directory: Path, client: httpx.Client = None) -> int:
+    code = 0
     if client is None:
         client = get_client()
 
@@ -46,16 +47,11 @@ def main(directory: Path, client: httpx.Client = None) -> int:
         if response.status_code == 201:
             print(
                 format_success_message(
-                    f"[created] Organization {organization.name} with {payload}"
-                )
-            )
-        elif response.status_code == 200:
-            print(
-                format_success_message(
                     f"[OK] Organization {organization.name} with {payload}"
                 )
             )
-        else:
+
+        if response.status_code > 201:
             print(
                 format_error_message(
                     f"ERROR: unexpected response status code: {response.status_code}"
@@ -68,19 +64,19 @@ def main(directory: Path, client: httpx.Client = None) -> int:
         # Upload catalog schema
         friction_less_schema = Schema(schema_path)
         extra_fields = get_extra_fields(friction_less_schema.field_names)
-        schema_fields = schema.get("fields")
+        schema_fields = friction_less_schema.get("fields")
         fields_payload = []
 
         for schema_field in schema_fields:
             if schema_field["name"] in extra_fields:
-                fields_payload.append(transform_to_field_payload(schema_field))
+                fields_payload.append(transform_schema_field_to_payload(schema_field))
         try:
-            payload = {
+            schema_payload = {
                 "organization_siret": organization.siret,
                 "extra_fields": fields_payload,
             }
 
-            response = client.post("/catalogs/", json=payload)
+            response = client.post("/catalogs/", json=schema_payload)
             response.raise_for_status()
         except (httpx.HTTPStatusError, httpx.HTTPError) as exc:
 
@@ -94,13 +90,7 @@ def main(directory: Path, client: httpx.Client = None) -> int:
             code = 1
             break
 
-        if response.status_code == 201:
-            print(
-                format_success_message(
-                    f"[created] Catalog schema for {organization.name}"
-                )
-            )
-        elif response.status_code == 200:
+        if response.status_code == 201 or response.status_code == 200:
             print(
                 format_success_message(f"[OK] Catalog schema for {organization.name}")
             )
@@ -113,8 +103,6 @@ def main(directory: Path, client: httpx.Client = None) -> int:
             )
             code = 1
             break
-
-    code = 0
 
     return code
 

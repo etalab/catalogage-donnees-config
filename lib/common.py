@@ -1,6 +1,7 @@
 from pathlib import Path
-import json
 from typing import List
+
+from frictionless import Field
 
 
 def get_paths(organization_directory_path: Path) -> List[Path]:
@@ -25,7 +26,7 @@ def get_paths_of(organization_directory_path: Path, file_name: str) -> List[Path
     return paths
 
 
-def transform_to_boolean_field_payload(field: json) -> json:
+def transform_to_boolean_field_payload(field: Field) -> dict:
 
     return {
         "name": field["name"],
@@ -39,7 +40,7 @@ def transform_to_boolean_field_payload(field: json) -> json:
     }
 
 
-def transform_to_enum_field_payload(field: json) -> json:
+def transform_to_enum_field_payload(field: Field) -> dict:
     return {
         "name": field["name"],
         "title": field["title"],
@@ -49,7 +50,7 @@ def transform_to_enum_field_payload(field: json) -> json:
     }
 
 
-def transform_to_string_field_payload(field: json) -> json:
+def transform_to_string_field_payload(field: Field) -> dict:
     return {
         "name": field["name"],
         "title": field["title"],
@@ -59,14 +60,14 @@ def transform_to_string_field_payload(field: json) -> json:
     }
 
 
-def transform_to_field_payload(field: json) -> json:
+def transform_schema_field_to_payload(field: Field) -> dict:
 
     field_type = field["type"]
 
     is_of_type_enum = (
         field_type == "string"
-        and field.get("constraints") is not None
-        and field.get("constraints").get("enum") is not None
+        and "constraints" in field
+        and "enum" in field.get("constraints")
     )
 
     if is_of_type_enum:

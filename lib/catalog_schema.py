@@ -1,6 +1,6 @@
+import json
 from pathlib import Path
 from typing import List, Set
-import json
 
 from lib.constants import COMMON_SCHEMA_FIELD_NAMES
 

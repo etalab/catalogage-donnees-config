@@ -27,4 +27,4 @@ check: #- Check the code and organizations
 	${bin}python -m scripts.check_catalog_schema organizations
 
 upload: #- Upload organizations
-	${bin}python -m scripts.upload_organizations organizations
+	${bin}python -m scripts.upload_catalog_schema_and_organizations organizations
