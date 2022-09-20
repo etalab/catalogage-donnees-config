@@ -2,16 +2,16 @@ import argparse
 import sys
 import traceback
 from pathlib import Path
-import json
+
 import dotenv
 import httpx
-
-from lib.http_client import get_client
-from lib.organization import get_organization
-from lib.catalog_schema import get_schema, get_extra_fields
 from frictionless import Schema
+
+from lib.catalog_schema import get_extra_fields
 from lib.common import get_paths, transform_schema_field_to_payload
 from lib.format_text import format_error_message, format_success_message
+from lib.http_client import get_client
+from lib.organization import get_organization
 
 
 def main(directory: Path, client: httpx.Client = None) -> int:
@@ -24,8 +24,6 @@ def main(directory: Path, client: httpx.Client = None) -> int:
         organization = get_organization(organization_path)
 
         schema_path = path / "catalog_schema.json"
-        schema = get_schema(schema_path)
-
         payload = {"siret": organization.siret, "name": organization.name}
 
         # Upload organization
@@ -65,16 +63,20 @@ def main(directory: Path, client: httpx.Client = None) -> int:
         friction_less_schema = Schema(schema_path)
         extra_fields = get_extra_fields(friction_less_schema.field_names)
         schema_fields = friction_less_schema.get("fields")
-        fields_payload = []
+        extra_field_payloads = []
 
         for schema_field in schema_fields:
             if schema_field["name"] in extra_fields:
-                fields_payload.append(transform_schema_field_to_payload(schema_field))
-        try:
+                extra_field_payloads.append(
+                    transform_schema_field_to_payload(schema_field)
+                )
+
             schema_payload = {
                 "organization_siret": organization.siret,
-                "extra_fields": fields_payload,
+                "extra_fields": extra_field_payloads,
             }
+
+        try:
 
             response = client.post("/catalogs/", json=schema_payload)
             response.raise_for_status()
@@ -90,11 +92,14 @@ def main(directory: Path, client: httpx.Client = None) -> int:
             code = 1
             break
 
-        if response.status_code == 201 or response.status_code == 200:
+        if response.status_code == 201:
             print(
-                format_success_message(f"[OK] Catalog schema for {organization.name}")
+                format_success_message(
+                    f"[Created] Catalog {organization.name} with {payload}"
+                )
             )
-        else:
+
+        if response.status_code > 201:
             print(
                 format_error_message(
                     f"ERROR: unexpected response status code: {response.status_code}"

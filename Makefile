@@ -5,7 +5,7 @@ venv = venv
 bin = ${venv}/bin/
 python = ${bin}python
 pip = ${bin}pip
-pysources = lib/ tests/
+pysources = lib/ tests/ scripts/
 
 install: #- Install dependencies
 	python3 -m venv ${venv}

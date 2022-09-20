@@ -1,14 +1,9 @@
-import json
 from pathlib import Path
 from typing import List, Set
 
 from lib.constants import COMMON_SCHEMA_FIELD_NAMES
 
 from .common import get_paths_of
-
-
-def get_schema(path: Path) -> str:
-    return json.loads(path.read_text())
 
 
 def get_schema_paths(directory_path: Path) -> List[Path]:

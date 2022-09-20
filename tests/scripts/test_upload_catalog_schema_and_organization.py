@@ -1,5 +1,7 @@
+# flake8: noqa: E501
 import json
 from pathlib import Path
+from typing import Tuple
 
 import dotenv
 import httpx
@@ -11,15 +13,11 @@ from scripts.upload_catalog_schema_and_organizations import main
 def test_upload_new_catalog_schema_and_new_organization(
     capsys: pytest.CaptureFixture,
 ) -> None:
-    payloads = []
-    request_paths = []
-    request_methods = []
+    payloads: Tuple[str, str, dict]
+    requests = []
 
     def app(request: httpx.Request) -> httpx.Response:
-
-        request_methods.append(request.method)
-        request_paths.append(request.url.path)
-        payloads.append(json.loads(request.content))
+        requests.append((request.method, request.url.path, json.loads(request.content)))
         return httpx.Response(201)
 
     client = httpx.Client(
@@ -35,10 +33,16 @@ def test_upload_new_catalog_schema_and_new_organization(
     )
     assert code == 0
 
-    print(payloads)
+    request1, request2 = requests
 
-    assert payloads == [
+    assert request1 == (
+        "POST",
+        "/api/organizations/",
         {"siret": "55566688899991", "name": "test_1"},
+    )
+    assert request2 == (
+        "POST",
+        "/api/catalogs/",
         {
             "organization_siret": "55566688899991",
             "extra_fields": [
@@ -213,10 +217,7 @@ def test_upload_new_catalog_schema_and_new_organization(
                 },
             ],
         },
-    ]
-
-    assert request_methods == ["POST", "POST"]
-    assert request_paths == ["/api/organizations/", "/api/catalogs/"]
+    )
 
 
 def test_server_http_error(capsys: pytest.CaptureFixture) -> None:

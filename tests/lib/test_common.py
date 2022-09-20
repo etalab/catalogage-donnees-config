@@ -10,7 +10,7 @@ def test_get_paths() -> None:
 
 
 def test_get_paths_of() -> None:
-    paths = get_paths_of(Path("tests/fixtures"), "organization.json")
+    paths = get_paths_of(Path("tests/fixtures"), "catalog_schema.json")
     assert len(paths) == 8
 
 

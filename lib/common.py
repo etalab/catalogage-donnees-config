@@ -26,7 +26,7 @@ def get_paths_of(organization_directory_path: Path, file_name: str) -> List[Path
     return paths
 
 
-def transform_to_boolean_field_payload(field: Field) -> dict:
+def _transform_to_boolean_field_payload(field: Field) -> dict:
 
     return {
         "name": field["name"],
@@ -40,7 +40,7 @@ def transform_to_boolean_field_payload(field: Field) -> dict:
     }
 
 
-def transform_to_enum_field_payload(field: Field) -> dict:
+def _transform_to_enum_field_payload(field: Field) -> dict:
     return {
         "name": field["name"],
         "title": field["title"],
@@ -50,7 +50,7 @@ def transform_to_enum_field_payload(field: Field) -> dict:
     }
 
 
-def transform_to_string_field_payload(field: Field) -> dict:
+def _transform_to_string_field_payload(field: Field) -> dict:
     return {
         "name": field["name"],
         "title": field["title"],
@@ -71,9 +71,9 @@ def transform_schema_field_to_payload(field: Field) -> dict:
     )
 
     if is_of_type_enum:
-        return transform_to_enum_field_payload(field)
+        return _transform_to_enum_field_payload(field)
 
     if field_type == "boolean":
-        return transform_to_boolean_field_payload(field)
+        return _transform_to_boolean_field_payload(field)
 
-    return transform_to_string_field_payload(field)
+    return _transform_to_string_field_payload(field)
