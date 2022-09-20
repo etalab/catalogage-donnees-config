@@ -5,7 +5,7 @@ venv = venv
 bin = ${venv}/bin/
 python = ${bin}python
 pip = ${bin}pip
-pysources = lib/ tests/
+pysources = lib/ tests/ scripts/
 
 install: #- Install dependencies
 	python3 -m venv ${venv}
@@ -27,4 +27,4 @@ check: #- Check the code and organizations
 	${bin}python -m scripts.check_catalog_schema organizations
 
 upload: #- Upload organizations
-	${bin}python -m scripts.upload_organizations organizations
+	${bin}python -m scripts.upload_catalog_schema_and_organizations organizations

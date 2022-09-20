@@ -1,29 +1,27 @@
-import pathlib
+import argparse
 import sys
-from tabulate import tabulate
-from frictionless import Resource, validate, Schema, FrictionlessException
-from typing import Set
+from pathlib import Path
 
-from lib.format_text import format_error_message, format_success_message
+from frictionless import FrictionlessException, Schema
+from tabulate import tabulate
+
 from lib.catalog_schema import (
-    get_schema_paths,
-    get_missing_fields,
     get_extra_fields,
+    get_missing_fields,
+    get_schema_paths,
     get_unsupported_constraints,
 )
-
-import argparse
-from pathlib import Path
+from lib.format_text import format_error_message, format_success_message
 
 
 def main(directory: Path) -> int:
     code = 0
-    for org_path in get_schema_paths(directory):
+    for schema_path in get_schema_paths(directory):
         try:
-            schema = Schema(org_path)
+            schema = Schema(schema_path)
             report = schema.validate()
             if not report.valid:
-                print(format_error_message(f"Error: {org_path} schema is not valid"))
+                print(format_error_message(f"Error: {schema_path} schema is not valid"))
                 code = 1
                 errors = report.flatten(["code", "message"])
                 print(tabulate(errors, headers=["code", "message"]))
@@ -40,7 +38,7 @@ def main(directory: Path) -> int:
             missing_fields_string = ",".join(missing_fields)
             print(
                 format_error_message(
-                    f"Error: {missing_fields_string} fields are missing in the schema in {org_path}"
+                    f"Error: {missing_fields_string} fields are missing in the schema in {schema_path}"  # noqa: E501
                 )
             )
             code = 1
@@ -57,19 +55,19 @@ def main(directory: Path) -> int:
                     )
                 )
                 code = 1
-            break
+                break
             if len(get_unsupported_constraints(field.constraints)) != 0:
                 print(
                     format_error_message(
-                        f"Error: {field} in {org_path} has unsupported constraint. Only constraint of enum type is supported"
+                        f"Error: {field} in {schema_path} has unsupported constraint. Only constraint of enum type is supported"  # noqa: E501
                     )
                 )
-            code = 1
-            break
+                code = 1
+                break
 
     if code == 0:
 
-        print(format_success_message(f"Success: All data schema files are valid!"))
+        print(format_success_message("Success: All data schema files are valid!"))
 
     return code
 
