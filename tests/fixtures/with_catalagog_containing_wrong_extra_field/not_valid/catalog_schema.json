@@ -9,13 +9,13 @@
             "title": "Roselyne Aliacar",
             "role": "author",
             "organisation": "Ministère de la Culture",
-            "email": "demo@catalogue.data.gouv.fr"
+            "email": "roselyne.aliacar@culture.gouv.fr"
         },
         {
             "title": "Johan Richer",
             "role": "author",
             "organisation": "multi",
-            "email": "dev@catalogue.data.gouv.fr"
+            "email": "johan.richer@multi.coop"
         }
     ],
     "version": "0.1.0",
@@ -357,13 +357,7 @@
             "name": "donnees_pi",
             "title": "Propriété intellectuelle",
             "description": "Le Ministère de la Culture peut-il se prévaloir d'un [droit de propriété intellectuelle](https://guides.etalab.gouv.fr/juridique/reutilisation/#le-cas-de-la-propriete-intellectuelle) sur le jeu de données ?",
-            "type": "boolean",
-            "trueValues": [
-                "Oui"
-            ],
-            "falseValues": [
-                "Non"
-            ]
+            "type": "NOT_VALID_TYPE"
         }
     ],
     "custom_checks": [

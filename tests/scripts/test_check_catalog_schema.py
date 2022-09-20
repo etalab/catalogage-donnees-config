@@ -27,5 +27,10 @@ def test_return_1_exit_code_if_a_catalog_schema_does_not_exists() -> None:
 
 
 def test_return_1_exit_code_if_at_least_one_field_is_missing() -> None:
-    code = main(Path("tests/fixtures/with_missing_fields"))
+    code = main(Path("tests/fixtures/with_missing_required_fields"))
+    assert code == 1
+
+
+def test_retunrn_1_exit_code_if_an_extra_field_is_not_valid() -> None:
+    code = main(Path("tests/fixtures/with_catalagog_containing_wrong_extra_field"))
     assert code == 1

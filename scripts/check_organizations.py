@@ -1,16 +1,13 @@
-import pathlib
+import argparse
 import sys
+from pathlib import Path
 
-from frictionless import Resource, validate
 from lib.format_text import format_error_message, format_success_message
 from lib.organization import (
-    get_organizations_path,
     contains_one_organization_per_file,
     get_organization_validation_report,
+    get_organizations_path,
 )
-
-import argparse
-from pathlib import Path
 
 
 def main(directory: Path) -> int:
@@ -19,7 +16,7 @@ def main(directory: Path) -> int:
         if not contains_one_organization_per_file(org_path):
             print(
                 format_error_message(
-                    f"Error: an organization file must contain only one organization. Multiple organizations found in {org_path}"
+                    f"Error: an organization file must contain only one organization. Multiple organizations found in {org_path}"  # noqa: E501
                 )
             )
             code = 1
