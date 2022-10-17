@@ -17,6 +17,12 @@ from lib.format_text import format_error_message, format_success_message
 def main(directory: Path) -> int:
     code = 0
     for schema_path in get_schema_paths(directory):
+
+        if not schema_path.is_file():
+            # if there is no data schema in the organization directory skip the checks
+            # and continue
+            continue
+
         try:
             schema = Schema(schema_path)
             report = schema.validate()
