@@ -220,6 +220,33 @@ def test_upload_new_catalog_schema_and_new_organization(
     )
 
 
+def test_upload_organization_without_schema() -> None:
+    payloads: Tuple[str, str, dict]
+    requests = []
+
+    def app(request: httpx.Request) -> httpx.Response:
+        requests.append((request.method, request.url.path, json.loads(request.content)))
+        return httpx.Response(201)
+
+    client = httpx.Client(
+        base_url="http://testserver/api",
+        transport=httpx.MockTransport(app),
+    )
+
+    code = main(
+        Path("tests/fixtures/with_no_existing_catalog_schema"),
+        client=client,
+    )
+    assert code == 0
+    assert len(requests) == 1
+
+    assert requests[0] == (
+        "POST",
+        "/api/organizations/",
+        {"siret": "55566688899992", "name": "test_2"},
+    )
+
+
 def test_server_http_error(capsys: pytest.CaptureFixture) -> None:
     def app(request: httpx.Request) -> httpx.Response:
         return httpx.Response(500)

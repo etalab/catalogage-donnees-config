@@ -24,10 +24,10 @@ def main(directory: Path, client: httpx.Client = None) -> int:
         organization = get_organization(organization_path)
 
         schema_path = path / "catalog_schema.json"
-        payload = {"siret": organization.siret, "name": organization.name}
+        catalog_schema_exists = Path(schema_path).is_file()
 
         # Upload organization
-
+        payload = {"siret": organization.siret, "name": organization.name}
         try:
             response = client.post("/organizations/", json=payload)
             response.raise_for_status()
@@ -59,55 +59,56 @@ def main(directory: Path, client: httpx.Client = None) -> int:
             code = 1
             break
 
-        # Upload catalog schema
-        friction_less_schema = Schema(schema_path)
-        extra_fields = get_extra_fields(friction_less_schema.field_names)
-        schema_fields = friction_less_schema.get("fields")
-        extra_field_payloads = []
+        if catalog_schema_exists:
 
-        for schema_field in schema_fields:
-            if schema_field["name"] in extra_fields:
-                extra_field_payloads.append(
-                    transform_schema_field_to_payload(schema_field)
+            friction_less_schema = Schema(schema_path)
+            extra_fields = get_extra_fields(friction_less_schema.field_names)
+            schema_fields = friction_less_schema.get("fields")
+            extra_field_payloads = []
+
+            for schema_field in schema_fields:
+                if schema_field["name"] in extra_fields:
+                    extra_field_payloads.append(
+                        transform_schema_field_to_payload(schema_field)
+                    )
+
+                schema_payload = {
+                    "organization_siret": organization.siret,
+                    "extra_fields": extra_field_payloads,
+                }
+
+            try:
+
+                response = client.post("/catalogs/", json=schema_payload)
+                response.raise_for_status()
+            except (httpx.HTTPStatusError, httpx.HTTPError) as exc:
+
+                print(
+                    format_error_message(
+                        f"ERROR: while requesting {exc.request.url!r} with {payload=}:"
+                    ),
+                    file=sys.stderr,
+                )
+                traceback.print_exc()
+                code = 1
+                break
+
+            if response.status_code == 201:
+                print(
+                    format_success_message(
+                        f"[Created] Catalog {organization.name} with {payload}"
+                    )
                 )
 
-            schema_payload = {
-                "organization_siret": organization.siret,
-                "extra_fields": extra_field_payloads,
-            }
-
-        try:
-
-            response = client.post("/catalogs/", json=schema_payload)
-            response.raise_for_status()
-        except (httpx.HTTPStatusError, httpx.HTTPError) as exc:
-
-            print(
-                format_error_message(
-                    f"ERROR: while requesting {exc.request.url!r} with {payload=}:"
-                ),
-                file=sys.stderr,
-            )
-            traceback.print_exc()
-            code = 1
-            break
-
-        if response.status_code == 201:
-            print(
-                format_success_message(
-                    f"[Created] Catalog {organization.name} with {payload}"
+            if response.status_code > 201:
+                print(
+                    format_error_message(
+                        f"ERROR: unexpected response status code: {response.status_code}"  # noqa: E501
+                    ),
+                    file=sys.stderr,
                 )
-            )
-
-        if response.status_code > 201:
-            print(
-                format_error_message(
-                    f"ERROR: unexpected response status code: {response.status_code}"
-                ),
-                file=sys.stderr,
-            )
-            code = 1
-            break
+                code = 1
+                break
 
     return code
 
