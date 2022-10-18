@@ -37,7 +37,27 @@ Pour ajouter une nouvelle organisation sur catalogue.data.gouv.fr, nommée par e
 
 ### Activer le catalogue d'une organisation
 
-_À venir..._
+Si vous voulez que votre catalogue soit activé au moment de l'ajout de votre organisation sur catalogue.data.gouv.fr, commencez par les deux premières étapes décrites ci-dessus ("Ajouter une organisation"), avant de continuer en suivant les étapes pour une des deux options suivantes ("Schéma commun" ou "Schéma spécifique").
+
+:warning: Attention, une fois le catalogue activé sur catalogue.data.gouv.fr, il n'est plus possible d'en modifier le schéma.
+
+#### Schéma commun (sans champs complémentaires)
+
+1. Placez une copie du [schéma commun](https://github.com/etalab/schema-catalogue-donnees/blob/v0.3.0/schema.json) dans le dossier de votre organisation précédent créé, puis renommez le fichier `catalog_schema.json`. Vous pouvez personnaliser les métadonnées du schéma (`name`, `description`, etc.).
+2. Créez une _pull request_ (PR) avec l'ajout de ce fichier (ou intégrer le à votre PR d'ajout d'organisation). Un script automatisé vérifiera la conformité des fichiers. La PR sera ensuite passée en revue par l'équipe de catalogue.data.gouv.fr.
+3. Une fois la PR acceptée, un script automatisé activera le catalogue sur catalogue.data.gouv.fr (le cas échéant, en même temps que l'organisation).
+
+#### Schéma spécifique (avec champs complémentaires)
+
+Un schéma spécifique consiste à ajouter un ou plusieurs champs complémentaires au [schéma commun](https://github.com/etalab/schema-catalogue-donnees). Vous pouvez en ajouter autant que nécessaire à la suite de ceux du schéma commun, en utilisant les types de champs suivants conformes à la [spécification Table Schema](https://specs.frictionlessdata.io/table-schema/) :
+
+- `string` : une chaîne de caractères.
+- `string` avec une contrainte `enum` : une liste de valeurs.
+- `boolean` : un booléen.
+
+Vous pouvez utiliser un exemple de schéma spécifique tel que [celui du Ministère de la Culture](https://github.com/etalab/catalogage-donnees-config/blob/main/organizations/culture/catalog_schema.json).
+
+Suivez les mêmes étapes décrite pour le "Schéma commun" ci-dessus en utilisant le schéma spécifique que vous avez créé, à la place du schéma commun.
 
 ## Développement
 
