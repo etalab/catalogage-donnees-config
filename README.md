@@ -2,32 +2,38 @@
 
 Ce répertoire contient des fichiers de configuration relatifs à l'instance de production de l'outil [catalogage-donnees](https://github.com/etalab/catalogage-donnees) en cours de développement.
 
-La première instance de l'outil sera le service connu sous le nom de `catalogue.data.gouv.fr`, coordonné par la DINUM.
+La première instance de l'outil est déployée sur [catalogue.data.gouv.fr](https://catalogue.data.gouv.fr) et est coordonnée par la DINUM.
+
+Pour plus d'informations, consultez la [documentation à destination des utilisateurs](https://github.com/etalab/catalogage-donnees/wiki/Documentation-%C3%A0-destination-des-utilisateurs).
 
 ## Utilisation
 
+Si vous voulez ajouter une organisation sur catalogue.data.gouv.fr, avec ou sans catalogue, c'est ici que ça se passe !
+
+L'activation du catalogue d'une organisation peut se faire au même moment que l'ajout de l'organisation elle-même, mais peut également avoir lieu dans un second temps. En effet, une organisation peut exister sans catalogue, par exemple afin de permettre à ses membres d'accéder au service et consulter les catalogues des autres organisations, tout en prenant le temps de préparer la création de son propre catalogue. Le choix du schéma du catalogue est un élément important de cette préparation. Il doit comporter à minima tous les champs du [schéma commun](https://github.com/etalab/schema-catalogue-donnees), auxquels des "champs complémentaires" peuvent être ajoutés.
+
+:warning: Attention, une fois un catalogue activé sur catalogue.data.gouv.fr, il n'est plus possible d'en modifier le schéma.
+
 ### Ajouter une organisation
 
-Pour créer une nouvelle organisation, nommée par exemple `Mon ministère` :
+Pour ajouter une nouvelle organisation sur catalogue.data.gouv.fr, nommée par exemple `Mon ministère` :
 
 1. Créez un dossier dans `organizations`, par exemple `organizations/mon-ministere`.
 2. Placez-y un fichier `organization.json`. Il doit respecter ce format :
 
-    ```json
-    [
-        {
-            "name": "Mon ministère",
-            "siret": "00011122233333"
-        }
-    ]
-    ```
+   ```json
+   [
+     {
+       "name": "Mon ministère",
+       "siret": "00011122233333"
+     }
+   ]
+   ```
 
-    **N.B.** Il est de votre responsabilité de vérifier que le numéro SIRET de l'organisation est valide et correspond bien à l'organisation cible.
+   **N.B.** Il est de votre responsabilité de vérifier que le numéro SIRET de l'organisation est valide et correspond bien à l'organisation cible.
 
-3. Créez une _pull request_ (PR) avec ces changements. Un script automatisé vérifiera la conformité des fichiers au format décrit ci-dessus. La PR devra ensuite être revue.
-4. Une fois la PR acceptée et _mergée_ dans la branch `main`, un script automatisé ajoutera l'organisation à l'instance avec les informations renseignées.
-
-En cas d'erreur de saisie, de changement des informations ou de tout autre problème suite à la création, merci de contacter l'équipe de développement, par exemple via le canal `~catalogage` du Mattermost de la communauté BetaGouv, ou via une issue sur ce dépôt.
+3. Créez une _pull request_ (PR) avec ces changements. Un script automatisé vérifiera la conformité du fichier. La PR sera ensuite passée en revue par l'équipe de catalogue.data.gouv.fr.
+4. Une fois la PR acceptée, un script automatisé ajoutera l'organisation sur catalogue.data.gouv.fr avec les informations renseignées.
 
 ### Activer le catalogue d'une organisation
 
