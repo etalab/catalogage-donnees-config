@@ -1,53 +1,32 @@
 {
   "$schema": "https://frictionlessdata.io/schemas/table-schema.json",
-  "name": "catalogue-donnees",
-  "title": "Catalogue de données",
-  "description": "Spécification du catalogue des jeux de données produits par une organisation",
+  "name": "catalogue-donnees-dinum",
+  "title": "Catalogue de données DINUM",
+  "description": "Spécification du catalogue des jeux de données produits par la DINUM",
   "countryCode": "FR",
-  "homepage": "https://github.com/etalab/schema-catalogue-donnees/",
-  "path": "https://github.com/etalab/schema-catalogue-donnees/raw/v0.3.0/schema.json",
-  "resources": [
-    {
-      "title": "Fichier valide (CSV)",
-      "name": "exemple-valide-csv",
-      "path": "https://github.com/etalab/schema-catalogue-donnees/raw/v0.3.0/exemple-valide.csv"
-    }
-  ],
   "sources": [
     {
-      "title": "Arrêté du 14 juin 2017 relatif aux données de référence",
-      "path": "https://www.legifrance.gouv.fr/loda/id/JORFTEXT000034944648/"
-    },
-    {
-      "title": "Spécification DCAT-AP (2.0.1)",
-      "path": "https://github.com/SEMICeu/DCAT-AP/raw/master/releases/2.0.1/DCAT_AP_2.0.1.pdf"
-    },
-    {
-      "title": "Technical Guidance for INSPIRE metadata for datasets and services (2.0.1)",
-      "path": "http://inspire.ec.europa.eu/documents/Metadata/MD_IR_and_ISO_20131029.pdf"
-    },
-    {
-      "title": "Schéma Catalogue simplifié OpenDataFrance (0.1.2)",
-      "path": "https://git.opendatafrance.net/scdl/catalogue"
+      "title": "Schéma Catalogue de données",
+      "path": "https://github.com/etalab/schema-catalogue-donnees"
     }
   ],
   "contributors": [
     {
-      "title": "Pierre Dittgen",
-      "role": "author",
-      "organisation": "Jailbreak",
-      "email": "pierre.dittgen@jailbreak.paris"
-    },
-    {
       "title": "Johan Richer",
       "role": "author",
-      "organisation": "Jailbreak",
-      "email": "johan.richer@jailbreak.paris"
+      "organisation": "multi",
+      "email": "johan.richer@multi.coop"
+    },
+    {
+      "title": "Mario Restuccia",
+      "role": "contributor",
+      "organisation": "Etalab",
+      "email": "mario.restuccia@data.gouv.fr"
     }
   ],
-  "version": "0.3.0",
-  "created": "2021-09-02",
-  "lastModified": "2022-07-19",
+  "version": "0.1.0",
+  "created": "2022-10-25",
+  "lastModified": "2022-10-25",
   "licenses": [
     {
       "title": "Etalab Licence Ouverte 2.0",
