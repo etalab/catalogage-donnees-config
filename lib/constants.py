@@ -16,7 +16,6 @@ COMMON_SCHEMA_FIELD_NAMES = set(
         "couv_geo",
         "url",
         "format",
-        "licence",
-        "producteur_type",
+        "licence"
     ]
 )
