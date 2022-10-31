@@ -34,7 +34,6 @@ def test_has_no_missing_fields() -> None:
         "url",
         "format",
         "licence",
-        "producteur_type",
     ]
 
     assert get_missing_fields(fields) == set([])
@@ -57,12 +56,11 @@ def test_has_missing_fields() -> None:
         "freq_maj",
         "couv_geo",
         "url",
-        "format",
     ]
 
     missing_fields = get_missing_fields(fields)
     assert len(missing_fields) == 2
-    assert missing_fields == set(["licence", "producteur_type"])
+    assert missing_fields == set(["licence", "format"])
 
 
 def test_has_extra_fields() -> None:

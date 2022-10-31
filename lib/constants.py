@@ -17,6 +17,5 @@ COMMON_SCHEMA_FIELD_NAMES = set(
         "url",
         "format",
         "licence",
-        "producteur_type",
     ]
 )
