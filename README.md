@@ -63,6 +63,12 @@ Vous pouvez utiliser un exemple de schéma spécifique tel que [celui du Minist�
 
 Suivez les mêmes étapes que pour le "Schéma commun" ci-dessus en utilisant le schéma spécifique que vous avez créé, à la place du schéma commun.
 
+## Gestion de projet
+
+Toute la partie gestion de projet (création et gestion des issues) se fait sur le repo catalogage-donne, disponnible à cette adresse:
+
+https://github.com/etalab/catalogage-donnees/issues
+
 ## Développement
 
 Cette section est destinée à l'équipe de développement de ce dépôt.

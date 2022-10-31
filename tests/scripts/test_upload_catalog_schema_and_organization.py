@@ -40,12 +40,27 @@ def test_upload_new_catalog_schema_and_new_organization(
         "/api/organizations/",
         {"siret": "55566688899991", "name": "test_1"},
     )
+
+    print(request2[2])
     assert request2 == (
         "POST",
         "/api/catalogs/",
         {
             "organization_siret": "55566688899991",
             "extra_fields": [
+                {
+                    "name": "producteur_type",
+                    "title": "Type de producteur",
+                    "hint_text": "Type de l'entité qui produit le jeu de données au sein du Ministère de la Culture.",
+                    "type": "ENUM",
+                    "data": {
+                        "values": [
+                            "1. Administration centrale",
+                            "2. Direction régionale des affaires culturelles",
+                            "3. Service à compétence nationale",
+                        ]
+                    },
+                },
                 {
                     "name": "direction",
                     "title": "Direction",
