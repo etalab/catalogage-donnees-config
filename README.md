@@ -31,6 +31,7 @@ Pour enregistrer une organisation sur catalogue.data.gouv.fr, nommée par exempl
    ```
 
    **N.B.** Il est de votre responsabilité de vérifier que le numéro SIRET de l'organisation est valide et correspond bien à l'organisation cible.
+4. *[Optionnel]* Vous pouvez rajouter le logo de votre organization en ajoutant un fichier `logo.svg` au dossier de votre organisation. Celui-ci doit obligatoirement être au format `SVG`
 
 3. Créez une _pull request_ (PR) avec ces changements. Un script automatisé vérifiera la conformité du fichier. La PR sera ensuite passée en revue par l'équipe de catalogue.data.gouv.fr.
 4. Une fois la PR acceptée, un script automatisé enregistrera l'organisation sur catalogue.data.gouv.fr avec les informations renseignées.
