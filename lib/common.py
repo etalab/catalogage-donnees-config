@@ -1,3 +1,4 @@
+import re
 from pathlib import Path
 from typing import List
 
@@ -77,3 +78,11 @@ def transform_schema_field_to_payload(field: Field) -> dict:
         return _transform_to_boolean_field_payload(field)
 
     return _transform_to_string_field_payload(field)
+
+
+# Inspired by https://stackoverflow.com/questions/63419010/check-if-an-image-file-is-a-valid-svg-file-in-python # noqa: E501
+def is_valid_svg(file_path: Path) -> bool:
+    SVG_R = r"(?:<\?xml\b[^>]*>[^<]*)?(?:<!--.*?-->[^<]*)*(?:<svg|<!DOCTYPE svg)\b"
+    SVG_RE = re.compile(SVG_R, re.DOTALL)
+    with open(str(file_path)) as f:
+        return SVG_RE.match(f.readline()) is not None

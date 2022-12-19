@@ -8,10 +8,14 @@ import httpx
 from frictionless import Schema
 
 from lib.catalog_schema import get_extra_fields
-from lib.common import get_paths, transform_schema_field_to_payload
+from lib.common import get_paths, is_valid_svg, transform_schema_field_to_payload
 from lib.format_text import format_error_message, format_success_message
 from lib.http_client import get_client
 from lib.organization import get_organization
+
+
+def get_logo_url(organization_directory: Path) -> str:
+    return f"https://raw.githubusercontent.com/etalab/catalogage-donnees-config/master/{str(organization_directory)}/logo.svg"  # noqa: E501
 
 
 def main(directory: Path, client: httpx.Client = None) -> int:
@@ -22,12 +26,35 @@ def main(directory: Path, client: httpx.Client = None) -> int:
     for path in get_paths(directory):
         organization_path = path / "organization.json"
         organization = get_organization(organization_path)
+        organization_logo = path / "logo.svg"
+        organization_logo_exists = Path(organization_logo).is_file()
 
         schema_path = path / "catalog_schema.json"
         catalog_schema_exists = Path(schema_path).is_file()
 
         # Upload organization
-        payload = {"siret": organization.siret, "name": organization.name}
+
+        payload = {
+            "siret": organization.siret,
+            "name": organization.name,
+            "logo_url": None,
+        }
+        if organization_logo_exists:
+            if is_valid_svg(organization_logo):
+                payload = {
+                    "siret": organization.siret,
+                    "name": organization.name,
+                    "logo_url": get_logo_url(organization_directory=path),
+                }
+            else:
+                code = 1
+                print(
+                    format_error_message(
+                        f"ERROR: file {organization_logo} is not a valid svg"
+                    ),
+                    file=sys.stderr,
+                )
+
         try:
             response = client.post("/organizations/", json=payload)
             response.raise_for_status()
