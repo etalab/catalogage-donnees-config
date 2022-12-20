@@ -6,12 +6,12 @@ from lib.common import get_paths, get_paths_of, transform_schema_field_to_payloa
 
 def test_get_paths() -> None:
     paths = get_paths(Path("tests/fixtures"))
-    assert len(paths) == 8
+    assert len(paths) == 9
 
 
 def test_get_paths_of() -> None:
     paths = get_paths_of(Path("tests/fixtures"), "catalog_schema.json")
-    assert len(paths) == 8
+    assert len(paths) == 9
 
 
 def test_transform_to_boolean_field_payload() -> None:
