@@ -8,7 +8,7 @@ import httpx
 from frictionless import Schema
 
 from lib.catalog_schema import get_extra_fields
-from lib.common import get_paths, is_valid_svg, transform_schema_field_to_payload
+from lib.common import get_paths, transform_schema_field_to_payload
 from lib.format_text import format_error_message, format_success_message
 from lib.http_client import get_client
 from lib.organization import get_organization
@@ -40,21 +40,11 @@ def main(directory: Path, client: httpx.Client = None) -> int:
             "logo_url": None,
         }
         if organization_logo_exists:
-            if is_valid_svg(organization_logo):
-                payload = {
-                    "siret": organization.siret,
-                    "name": organization.name,
-                    "logo_url": get_logo_url(organization_directory=path),
-                }
-            else:
-                code = 1
-                print(
-                    format_error_message(
-                        f"ERROR: file {organization_logo} is not a valid svg"
-                    ),
-                    file=sys.stderr,
-                )
-
+            payload = {
+                "siret": organization.siret,
+                "name": organization.name,
+                "logo_url": get_logo_url(organization_directory=path),
+            }
         try:
             response = client.post("/organizations/", json=payload)
             response.raise_for_status()

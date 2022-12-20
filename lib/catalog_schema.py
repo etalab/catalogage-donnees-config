@@ -10,6 +10,10 @@ def get_schema_paths(directory_path: Path) -> List[Path]:
     return get_paths_of(directory_path, "catalog_schema.json")
 
 
+def get_logo_paths(directory_path: Path) -> List[Path]:
+    return get_paths_of(directory_path, "logo.svg")
+
+
 def has_field(field_name: str, field_list: List[str]) -> bool:
     return any(field_name in field for field in field_list)
 
