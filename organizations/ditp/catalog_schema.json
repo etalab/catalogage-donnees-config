@@ -26,7 +26,7 @@
   ],
   "version": "0.1.0",
   "created": "2023-03-29",
-  "lastModified": "2023-03-29",
+  "lastModified": "2023-04-19",
   "licenses": [
     {
       "title": "Etalab Licence Ouverte 2.0",
@@ -180,6 +180,74 @@
       "description": "Licence de réutilisation appliquée au jeu de données.",
       "type": "string",
       "example": "Licence ouverte"
+    },
+    {
+      "name": "indicateur_ID",
+      "title": "Identifiant de l'indicateur",
+      "description": "Identifiant permettant d'associer ce jeu de données à un indicateur.",
+      "type": "string"
+    },
+    {
+      "name": "complement_description",
+      "title": "Complément de description",
+      "description": "Informations complémentaires sur ce jeu de données.",
+      "type": "string"
+    },
+    {
+      "name": "indicateur_orga",
+      "title": "Organisation de l'indicateur",
+      "description": "Nom de l'organisation concernée par l'indicateur associé à ce jeu de données.",
+      "type": "string"
+    },
+    {
+      "name": "indicateur_service",
+      "title": "Service de l'indicateur",
+      "description": "Nom de l'entité (direction, sous-direction, service...) au sein de l'organisation concernée par l'indicateur.",
+      "type": "string"
+    },
+    {
+      "name": "indicateur_contact_nom",
+      "title": "Nom du contact de l'indicateur",
+      "description": "Nom de famille de la personne contact au sein de l'organisation concernée par l'indicateur.",
+      "type": "string"
+    },
+    {
+      "name": "indicateur_contact_prenom",
+      "title": "Prénom du contact de l'indicateur",
+      "description": "Prénom de la personne contact au sein de l'organisation concernée par l'indicateur.",
+      "type": "string"
+    },
+    {
+      "name": "freq_diff",
+      "title": "Différence entre fréquence d'actualisation territoriale et nationale",
+      "description": "La fréquence d'actualisation des données territoriales est-elle différente de l'actualisation au niveau national ?",
+      "type": "boolean",
+      "trueValues": ["Oui"],
+      "falseValues": ["Non"]
+    },
+    {
+      "name": "freq_diff_terr",
+      "title": "Fréquence d'actualisation territoriale",
+      "description": "Quelle est la fréquence d'actualisation des données territoriales ?",
+      "type": "string"
+    },
+    {
+      "name": "freq_diff_exp",
+      "title": "Explication sur la différence entre fréquence d'actualisation territoriale et nationale",
+      "description": "Quelle est la raison de la différence entre fréquence d'actualisation territoriale et nationale ?",
+      "type": "string"
+    },
+    {
+      "name": "methodo_collecte",
+      "title": "Méthodologie de collecte des données",
+      "description": "Quelle est la méthodologie utilisée pour collecter ces données ?",
+      "type": "string"
+    },
+    {
+      "name": "donnees_diffusion",
+      "title": "Perspectives de diffusion",
+      "description": "Ce jeu de données peut-il être ouvert ? si non, pourquoi ? (Pour plus d'informations, [lire le guide d'Etalab](https://guides.etalab.gouv.fr/juridique/ouverture/).)",
+      "type": "string"
     }
   ],
   "custom_checks": [
