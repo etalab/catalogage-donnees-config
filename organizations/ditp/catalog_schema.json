@@ -221,15 +221,15 @@
       "name": "freq_diff",
       "title": "Différence entre fréquence d'actualisation territoriale et nationale",
       "description": "La fréquence d'actualisation des données territoriales est-elle différente de l'actualisation au niveau national ?",
-      "type": "boolean"
+      "type": "boolean",
+      "trueValues": ["Oui"],
+      "falseValues": ["Non"]
     },
     {
       "name": "freq_diff_terr",
       "title": "Fréquence d'actualisation territoriale",
       "description": "Quelle est la fréquence d'actualisation des données territoriales ?",
-      "type": "string",
-      "trueValues": ["Oui"],
-      "falseValues": ["Non"]
+      "type": "string"
     },
     {
       "name": "freq_diff_exp",
