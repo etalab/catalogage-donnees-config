@@ -1,6 +1,6 @@
 {
   "$schema": "https://frictionlessdata.io/schemas/table-schema.json",
-  "name": "catalogue-donnees-cereme",
+  "name": "catalogue-donnees-cerema",
   "title": "Catalogue de données CEREMA",
   "description": "Spécification du catalogue des jeux de données produits par le CEREMA",
   "countryCode": "FR",
